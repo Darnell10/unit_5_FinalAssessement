@@ -46,13 +46,15 @@ public class SportsAdapter extends RecyclerView.Adapter<SportsAdapter.SportsView
 
     public class SportsViewHolder extends RecyclerView.ViewHolder{
         ImageView articleImage;
-        TextView articleTitle;
+        TextView articleTitle, articleDescription;
 
         public SportsViewHolder(View itemView) {
             super(itemView);
 
             articleImage = itemView.findViewById(R.id.article_image);
             articleTitle = itemView.findViewById(R.id.article_title);
+            articleDescription = itemView.findViewById(R.id.article_description);
+
         }
 
         public void onBind(Articles articles) {
@@ -61,6 +63,7 @@ public class SportsAdapter extends RecyclerView.Adapter<SportsAdapter.SportsView
                     .into(articleImage);
 
             articleTitle.setText(articles.getTitle());
+            articleDescription.setText(articles.getDescription());
 
         }
     }
