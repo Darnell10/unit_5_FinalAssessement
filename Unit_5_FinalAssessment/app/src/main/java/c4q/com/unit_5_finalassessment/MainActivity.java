@@ -9,10 +9,10 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import c4q.com.unit_5_finalassessment.API.NewsDBService;
-import c4q.com.unit_5_finalassessment.Model.Articles;
-import c4q.com.unit_5_finalassessment.Model.NewsDataWrapper;
-import c4q.com.unit_5_finalassessment.Service.NewsDatabaseServiceGenerator;
+import c4q.com.unit_5_finalassessment.api.NewsDBService;
+import c4q.com.unit_5_finalassessment.model.Articles;
+import c4q.com.unit_5_finalassessment.model.NewsDataWrapper;
+import c4q.com.unit_5_finalassessment.service.NewsDatabaseServiceGenerator;
 import c4q.com.unit_5_finalassessment.adapter.SportsAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;

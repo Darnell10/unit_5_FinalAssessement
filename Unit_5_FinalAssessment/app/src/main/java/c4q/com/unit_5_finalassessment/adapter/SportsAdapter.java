@@ -1,6 +1,5 @@
 package c4q.com.unit_5_finalassessment.adapter;
 
-import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import c4q.com.unit_5_finalassessment.Model.Articles;
+import c4q.com.unit_5_finalassessment.model.Articles;
 import c4q.com.unit_5_finalassessment.R;
 
 /**
