@@ -1,7 +1,7 @@
-package c4q.com.unit_5_finalassessment.API;
+package c4q.com.unit_5_finalassessment.api;
 
 
-import c4q.com.unit_5_finalassessment.Model.NewsDataWrapper;
+import c4q.com.unit_5_finalassessment.model.NewsDataWrapper;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

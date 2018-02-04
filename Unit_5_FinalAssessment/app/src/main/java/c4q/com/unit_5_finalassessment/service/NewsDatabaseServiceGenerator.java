@@ -1,7 +1,7 @@
-package c4q.com.unit_5_finalassessment.Service;
+package c4q.com.unit_5_finalassessment.service;
 
 
-import c4q.com.unit_5_finalassessment.API.NewsDBService;
+import c4q.com.unit_5_finalassessment.api.NewsDBService;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
