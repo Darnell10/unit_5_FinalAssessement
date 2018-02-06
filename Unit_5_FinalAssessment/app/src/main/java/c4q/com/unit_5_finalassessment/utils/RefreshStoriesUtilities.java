@@ -1,4 +1,4 @@
-package c4q.com.unit_5_finalassessment.sync;
+package c4q.com.unit_5_finalassessment.utils;
 
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import c4q.com.unit_5_finalassessment.sync.NewsStoriesFirebaseJobService;
 import com.firebase.jobdispatcher.Constraint;
 import com.firebase.jobdispatcher.Driver;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
@@ -50,7 +51,7 @@ public class RefreshStoriesUtilities {
         .setRetryStrategy(RetryStrategy.DEFAULT_EXPONENTIAL)
         .build();
 
-    dispatcher.schedule(refreshStoriesJob);
+    dispatcher.mustSchedule(refreshStoriesJob);
     isInitialized = true;
   }
 

@@ -21,7 +21,7 @@ public class NewsStoriesFirebaseJobService extends JobService {
     Log.d(TAG, "start: on start called");
     jobParams = job;
     newsRefreshTask = new NewsRefreshTask();
-    //newsRefreshTask.getMoviesData(job.getTag(), this);
+    newsRefreshTask.getMoviesData(this);
     return true;
   }
 
