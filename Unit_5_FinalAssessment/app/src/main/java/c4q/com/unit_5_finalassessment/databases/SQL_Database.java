@@ -1,4 +1,4 @@
-package c4q.com.unit_5_finalassessment;
+package c4q.com.unit_5_finalassessment.databases;
 
 import android.content.Context;
 import android.database.Cursor;
