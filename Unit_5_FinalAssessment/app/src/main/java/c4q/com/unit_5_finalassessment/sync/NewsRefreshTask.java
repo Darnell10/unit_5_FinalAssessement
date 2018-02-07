@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import c4q.com.unit_5_finalassessment.api.NewsDBService;
+import c4q.com.unit_5_finalassessment.api.PrivateAPI;
 import c4q.com.unit_5_finalassessment.model.Articles;
 import c4q.com.unit_5_finalassessment.model.NewsDataWrapper;
 import c4q.com.unit_5_finalassessment.service.NewsDatabaseServiceGenerator;
