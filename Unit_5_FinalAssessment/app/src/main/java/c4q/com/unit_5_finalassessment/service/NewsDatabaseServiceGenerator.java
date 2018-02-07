@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NewsDatabaseServiceGenerator {
 
-  private static final String BASE_URL = "https://newsapi.org/";
+  private static String BASE_URL = "https://newsapi.org/";
 
   private static Retrofit.Builder builder =
       new Retrofit.Builder()
