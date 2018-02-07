@@ -18,7 +18,10 @@ import c4q.com.unit_5_finalassessment.R;
 import c4q.com.unit_5_finalassessment.model.Articles;
 import c4q.com.unit_5_finalassessment.sync.NewsRefreshIntentService;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
+import retrofit2.http.Url;
 
 /**
  * Created by c4q on 2/5/18.
@@ -48,7 +51,7 @@ public class NotificationUtils {
         NEWSFEED_REFRESH_NOTIFCATION_CHANNEL_ID)
         .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
         .setSmallIcon(R.drawable.newspaper)
-        .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.newspaper))
+        .setLargeIcon(getBitmapFromURL(article.getUrlToImage()))
         .setContentTitle("Breaking News")
         .setContentText(article.getTitle())
         .setStyle(new BigTextStyle().bigText(article.getTitle()))
@@ -60,7 +63,20 @@ public class NotificationUtils {
 
     notificationBuilder.setPriority(NotificationCompat.PRIORITY_HIGH);
     notificationManager.notify(NEWSFEED_REFRESH_NOTIFCATION_ID, notificationBuilder.build());
+  }
 
+  private static Bitmap getBitmapFromURL(String link) {
+    try {
+      URL url = new URL(link);
+      HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+      connection.setDoInput(true);
+      connection.connect();
+      InputStream inputStream = connection.getInputStream();
+      Bitmap imageBitmap = BitmapFactory.decodeStream(inputStream);
+      return imageBitmap;
+    } catch (IOException e) {
+      return null;
+    }
   }
 
   private static Action goToArticleSourceAction(Context context, String url) {
@@ -70,7 +86,7 @@ public class NotificationUtils {
     PendingIntent gotoArticlePendingIntent = PendingIntent
         .getService(context, ACTION_GO_TO_SOURCE_PENDING_INTENT_ID, gotToArticleIntent,
             PendingIntent.FLAG_UPDATE_CURRENT);
-    return new Action(R.drawable.window_close, "goto-article",
+    return new Action(R.drawable.windowclose, "goto-article",
         gotoArticlePendingIntent);
   }
 
@@ -80,7 +96,7 @@ public class NotificationUtils {
     PendingIntent ignoreNotificationPendingIntent = PendingIntent
         .getService(context, ACTION_DISMISS_PENDING_INTENT_ID, ignoreNotificationIntent,
             PendingIntent.FLAG_UPDATE_CURRENT);
-    return new Action(R.drawable.window_close, "dismiss-notification",
+    return new Action(R.drawable.windowclose, "dismiss-notification",
         ignoreNotificationPendingIntent);
   }
 

@@ -3,38 +3,47 @@ package c4q.com.unit_5_finalassessment.model;
 
 public class Articles {
 
-    private String author;
-    private String title;
-    private String description;
-    private String url;
-    private String urlToImage;
-    private String publishedAt;
+  private String author;
+  private String title;
+  private String description;
+  private String url;
+  private String urlToImage;
+  private String publishedAt;
 
-    public Articles(String author, String title, String description, String url, String urlToImage, String published) {
-    }
+  public Articles(String author, String title, String description, String url, String urlToImage,
+      String published) {
+  }
 
 
-    public String getAuthor() {
-        return author;
-    }
+  public void setUrl(String url) {
+    this.url = url;
+  }
 
-    public String getTitle() {
-        return title;
-    }
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-    public String getDescription() {
-        return description;
-    }
+  public String getAuthor() {
+    return author;
+  }
 
-    public String getUrl() {
-        return url;
-    }
+  public String getTitle() {
+    return title;
+  }
 
-    public String getUrlToImage() {
-        return urlToImage;
-    }
+  public String getDescription() {
+    return description;
+  }
 
-    public String getPublishedAt() {
-        return publishedAt;
-    }
+  public String getUrl() {
+    return url;
+  }
+
+  public String getUrlToImage() {
+    return urlToImage;
+  }
+
+  public String getPublishedAt() {
+    return publishedAt;
+  }
 }
