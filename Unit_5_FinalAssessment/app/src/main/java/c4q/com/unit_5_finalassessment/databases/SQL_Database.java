@@ -19,14 +19,25 @@ public class SQL_Database extends SQLiteOpenHelper {
 
     //private static SQL_Database sqLiteDatabase;
 
+    private static SQL_Database instance;
+
     private static final String DATABASE_NAME = "sport.db";
     private static final String TABLE_NAME = "sports";
     private static final int SCHEMA_VERSION = 1;
 
 
+
+    public  static SQL_Database getInstance(Context context){
+        if(instance == null){
+            instance = new SQL_Database(context.getApplicationContext());
+        }
+        return instance;
+    }
+
     public SQL_Database(Context context) {
         super(context, DATABASE_NAME, null, SCHEMA_VERSION);
     }
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {

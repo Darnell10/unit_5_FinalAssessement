@@ -6,6 +6,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import android.view.View;
+import c4q.com.unit_5_finalassessment.api.PrivateAPI;
+import c4q.com.unit_5_finalassessment.utils.NotificationUtils;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final NewsDBService sportsNewsCallback = NewsDatabaseServiceGenerator
             .createService();
+    private static final String API_KEY = "aabd804e78a548cfaaa7ef737708b084";
     private List<Articles> articlesList = new ArrayList<>();
 
     RecyclerView articlesRV;
@@ -36,14 +40,13 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext());
         articlesRV.setLayoutManager(layout);
 
-
         getSportsNewsData();
     }
 
 
     public void getSportsNewsData() {
         Call<NewsDataWrapper> call = sportsNewsCallback
-                .getNewsDiscover(PrivateAPI.getNewsApiKey());
+                .getNewsDiscover(API_KEY);
         call.enqueue(new Callback<NewsDataWrapper>() {
             @Override
             public void onResponse(Call<NewsDataWrapper> call, Response<NewsDataWrapper> response) {
