@@ -61,12 +61,12 @@ public class SQL_Database extends SQLiteOpenHelper {
     public void addStory(Articles articles) {
         Cursor cursor = getReadableDatabase().rawQuery(
                 " SELECT * FROM " + TABLE_NAME
-                + "‘WHERE author ’" + articles.getAuthor()
-                + "‘AND title’" + articles.getTitle()
-                + " ‘AND  description’" + articles.getDescription()
-                + "' AND url’" + articles.getUrl()
-                + "‘AND  urlToImage’" + articles.getUrlToImage()
-                + " ' AND published’" + articles.getPublishedAt()
+                + "'WHERE author'" + articles.getAuthor()
+                + "'AND title'" + articles.getTitle()
+                + "'AND  description '" + articles.getDescription()
+                + "'AND url'" + articles.getUrl()
+                + "'AND  urlToImage'" + articles.getUrlToImage()
+                + "' AND published '" + articles.getPublishedAt()
                 + "';'", null);
 
         if (cursor.getCount()==0){
