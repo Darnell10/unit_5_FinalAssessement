@@ -58,29 +58,44 @@ public class SQL_Database extends SQLiteOpenHelper {
          */
     }
 
-    public void addStory(Articles articles) {
-        Cursor cursor = getReadableDatabase().rawQuery(
-                " SELECT * FROM " + TABLE_NAME
-                + "'WHERE author'" + articles.getAuthor()
-                + "'AND title'" + articles.getTitle()
-                + "'AND  description '" + articles.getDescription()
-                + "'AND url'" + articles.getUrl()
-                + "'AND  urlToImage'" + articles.getUrlToImage()
-                + "' AND published '" + articles.getPublishedAt()
-                + "';'", null);
+    // This is the original code!!
+//    public void addStory(Articles articles) {
+//        Cursor cursor = getReadableDatabase().rawQuery(
+//                " SELECT * FROM " + TABLE_NAME
+//                + "WHERE author " + articles.getAuthor()
+//                + " AND title " + articles.getTitle()
+//                + " AND  description  " + articles.getDescription()
+//                + " AND url " + articles.getUrl()
+//                + " AND  urlToImage " + articles.getUrlToImage()
+//                + " AND published  " + articles.getPublishedAt()
+//                + "';'", null);
 
-        if (cursor.getCount()==0){
-            getWritableDatabase().execSQL( " INSERT INTO " + TABLE_NAME
-                    +"(author,title,description,url ,urlToImage ,published) VALUES (‘" +
-                    articles.getAuthor()+"‘,’" +
-                    articles.getTitle()+"‘,’" +
-                    articles.getDescription()+"‘,’" +
-                    articles.getUrl()+"‘,’" +
-                    articles.getUrlToImage()+"‘,’" +
-                    articles.getPublishedAt()+"‘);’");
-        }
-        cursor.close();
+
+    public void addComix(Articles articles) {
+        getWritableDatabase().execSQL(" INSERT INTO " + TABLE_NAME +
+                "(author,title,description,url,urlToImage,published) VALUES("
+                + "'" + articles.getAuthor() + "'"
+                + "," + "'" + articles.getTitle() + "'"
+                + "," + "'" + articles.getDescription() + "'"
+                + "," + "'" + articles.getUrl() + "'"
+                + "," + "'" + articles.getUrlToImage() + "'"
+                + "," + "'" + articles.getPublishedAt()
+                + "';");
     }
+
+    // related to original code do not delete till issue is solved.
+//        if (cursor.getCount()==0){
+//            getWritableDatabase().execSQL( " INSERT INTO " + TABLE_NAME
+//                    +"(author,title,description,url ,urlToImage ,published) VALUES (‘" +
+//                    articles.getAuthor()+"‘,’" +
+//                    articles.getTitle()+"‘,’" +
+//                    articles.getDescription()+"‘,’" +
+//                    articles.getUrl()+"‘,’" +
+//                    articles.getUrlToImage()+"‘,’" +
+//                    articles.getPublishedAt()+"‘);’");
+//        }
+//        cursor.close();
+//    }
 
     public List<Articles> getArticlesList(){
         List<Articles> articlesList =new ArrayList<>();

@@ -1,5 +1,6 @@
 package c4q.com.unit_5_finalassessment.adapter;
 
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,7 @@ public class SportsAdapter extends RecyclerView.Adapter<SportsAdapter.SportsView
     return new SportsViewHolder(v);
   }
 
+  //Wrap call in an ascync task
   @Override
   public void onBindViewHolder(final SportsViewHolder holder, final int position) {
     Articles articles = articlesList.get(position);
@@ -43,6 +45,7 @@ public class SportsAdapter extends RecyclerView.Adapter<SportsAdapter.SportsView
       @Override
       public void onClick(View v) {
         articlesList.get(position).getUrl();
+        //AsyncTask asyncTask = new AsyncTask();
         NotificationUtils.breakingNews(holder.itemView.getContext(), articlesList.get(position));
       }
     });
