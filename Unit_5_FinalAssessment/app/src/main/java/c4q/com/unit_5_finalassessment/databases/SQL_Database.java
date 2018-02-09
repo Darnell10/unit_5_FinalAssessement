@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-import c4q.com.unit_5_finalassessment.model.Articles;
+import c4q.com.unit_5_finalassessment.model.Article;
 
 
 /**
@@ -26,15 +26,14 @@ public class SQL_Database extends SQLiteOpenHelper {
     private static final int SCHEMA_VERSION = 1;
 
 
-
-    public  static SQL_Database getInstance(Context context){
-        if(instance == null){
+    public static SQL_Database getInstance(Context context) {
+        if (instance == null) {
             instance = new SQL_Database(context.getApplicationContext());
         }
         return instance;
     }
 
-    public SQL_Database(Context context) {
+    private SQL_Database(Context context) {
         super(context, DATABASE_NAME, null, SCHEMA_VERSION);
     }
 
@@ -43,8 +42,8 @@ public class SQL_Database extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_NAME
                 + "(_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-        + " author TEXT, title TEXT, "
-        + "description TEXT, url TEXT,urlToImage TEXT,published TEXT);");
+                + " author TEXT, title TEXT, "
+                + "description TEXT, url TEXT,urlToImage TEXT,published TEXT);");
 
     }
 
@@ -59,7 +58,7 @@ public class SQL_Database extends SQLiteOpenHelper {
     }
 
     // This is the original code!!
-//    public void addStory(Articles articles) {
+//    public void addStory(Article articles) {
 //        Cursor cursor = getReadableDatabase().rawQuery(
 //                " SELECT * FROM " + TABLE_NAME
 //                + "WHERE author " + articles.getAuthor()
@@ -71,15 +70,15 @@ public class SQL_Database extends SQLiteOpenHelper {
 //                + "';'", null);
 
 
-    public void addComix(Articles articles) {
+    public void addArticle(Article article) {
         getWritableDatabase().execSQL(" INSERT INTO " + TABLE_NAME +
                 "(author,title,description,url,urlToImage,published) VALUES("
-                + "'" + articles.getAuthor() + "'"
-                + "," + "'" + articles.getTitle() + "'"
-                + "," + "'" + articles.getDescription() + "'"
-                + "," + "'" + articles.getUrl() + "'"
-                + "," + "'" + articles.getUrlToImage() + "'"
-                + "," + "'" + articles.getPublishedAt()
+                + "'" + article.getAuthor() + "'"
+                + "," + "'" + article.getTitle() + "'"
+                + "," + "'" + article.getDescription() + "'"
+                + "," + "'" + article.getUrl() + "'"
+                + "," + "'" + article.getUrlToImage() + "'"
+                + "," + "'" + article.getPublishedAt()
                 + "';");
     }
 
@@ -97,25 +96,25 @@ public class SQL_Database extends SQLiteOpenHelper {
 //        cursor.close();
 //    }
 
-    public List<Articles> getArticlesList(){
-        List<Articles> articlesList =new ArrayList<>();
+    public List<Article> getArticlesList() {
+        List<Article> articleList = new ArrayList<>();
         Cursor cursor = getReadableDatabase().rawQuery(
-                " SELECT * FROM " + TABLE_NAME +";", null);
-        if (cursor != null){
+                " SELECT * FROM " + TABLE_NAME + ";", null);
+        if (cursor != null) {
             if (cursor.moveToFirst()) {
                 do {
-                    Articles article = new Articles(
+                    Article article = new Article(
                             cursor.getString(cursor.getColumnIndex("author")),
                             cursor.getString(cursor.getColumnIndex("title")),
                             cursor.getString(cursor.getColumnIndex("description")),
                             cursor.getString(cursor.getColumnIndex("url")),
                             cursor.getString(cursor.getColumnIndex("urlToImage")),
                             cursor.getString(cursor.getColumnIndex("published")));
-                    articlesList.add(article);
+                    articleList.add(article);
                 } while (cursor.moveToNext());
             }
         }
-        return articlesList;
+        return articleList;
     }
 
 

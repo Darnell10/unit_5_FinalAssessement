@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import c4q.com.unit_5_finalassessment.model.Articles;
+import c4q.com.unit_5_finalassessment.model.Article;
 
 import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 
@@ -37,7 +37,7 @@ public class CupboardDB extends SQLiteOpenHelper {
 
     static {
         //Registers the model
-        cupboard().register(Articles.class);
+        cupboard().register(Article.class);
     }
 
 

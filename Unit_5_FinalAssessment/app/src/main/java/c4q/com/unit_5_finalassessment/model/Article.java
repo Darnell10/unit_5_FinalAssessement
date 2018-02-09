@@ -1,7 +1,7 @@
 package c4q.com.unit_5_finalassessment.model;
 
 
-public class Articles {
+public class Article {
 
   private String author;
   private String title;
@@ -10,8 +10,8 @@ public class Articles {
   private String urlToImage;
   private String publishedAt;
 
-  public Articles(String author, String title, String description, String url, String urlToImage,
-      String published) {
+  public Article(String author, String title, String description, String url, String urlToImage,
+                 String published) {
   }
 
 

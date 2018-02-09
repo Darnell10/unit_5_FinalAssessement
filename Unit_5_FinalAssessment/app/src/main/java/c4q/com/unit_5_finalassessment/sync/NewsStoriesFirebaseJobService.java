@@ -1,7 +1,5 @@
 package c4q.com.unit_5_finalassessment.sync;
 
-import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
@@ -13,15 +11,15 @@ import com.firebase.jobdispatcher.JobService;
 public class NewsStoriesFirebaseJobService extends JobService {
 
   private static String TAG = NewsStoriesFirebaseJobService.class.getSimpleName();
-  JobParameters jobParams;
-  NewsRefreshTask newsRefreshTask;
+  private JobParameters jobParams;
+  private NewsRefreshTask newsRefreshTask;
 
   @Override
   public boolean onStartJob(JobParameters job) {
     Log.d(TAG, "start: on start called");
     jobParams = job;
     newsRefreshTask = new NewsRefreshTask();
-    newsRefreshTask.getMoviesData(this);
+    newsRefreshTask.getArticlesData(this);
     return true;
   }
 
