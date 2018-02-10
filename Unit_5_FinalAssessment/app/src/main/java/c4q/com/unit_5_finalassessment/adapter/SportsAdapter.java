@@ -1,6 +1,8 @@
 package c4q.com.unit_5_finalassessment.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
