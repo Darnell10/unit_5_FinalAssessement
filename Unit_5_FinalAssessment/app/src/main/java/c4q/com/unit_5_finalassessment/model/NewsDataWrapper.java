@@ -6,7 +6,7 @@ import java.util.List;
 public class NewsDataWrapper {
     private String status;
     private int totalResults;
-    private List<Articles> articles;
+    private List<Article> articles;
 
     public String getStatus() {
         return status;
@@ -16,7 +16,7 @@ public class NewsDataWrapper {
         return totalResults;
     }
 
-    public List<Articles> getArticles() {
+    public List<Article> getArticles() {
         return articles;
     }
 }

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import c4q.com.unit_5_finalassessment.activities.DetailsActivity;
+import c4q.com.unit_5_finalassessment.model.Article;
 import c4q.com.unit_5_finalassessment.utils.NotificationUtils;
 
 import com.google.gson.Gson;
@@ -17,7 +18,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import c4q.com.unit_5_finalassessment.model.Articles;
 import c4q.com.unit_5_finalassessment.R;
 
 /**
@@ -26,10 +26,10 @@ import c4q.com.unit_5_finalassessment.R;
 
 public class SportsAdapter extends RecyclerView.Adapter<SportsAdapter.SportsViewHolder> {
 
-  List<Articles> articlesList;
+  private List<Article> articleList;
 
-  public SportsAdapter(List<Articles> articlesList) {
-    this.articlesList = articlesList;
+  public SportsAdapter(List<Article> articleList) {
+    this.articleList = articleList;
   }
 
   @Override
@@ -41,26 +41,27 @@ public class SportsAdapter extends RecyclerView.Adapter<SportsAdapter.SportsView
 
   @Override
   public void onBindViewHolder(final SportsViewHolder holder, final int position) {
-    Articles articles = articlesList.get(position);
-    holder.onBind(articles);
+    Article article = articleList.get(position);
+    holder.onBind(article);
     holder.itemView.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
-        articlesList.get(position).getUrl();
-        NotificationUtils.breakingNews(holder.itemView.getContext(), articlesList.get(position));
+        articleList.get(position).getUrl();
+        //AsyncTask asyncTask = new AsyncTask();
+        NotificationUtils.breakingNews(holder.itemView.getContext(), articleList.get(position));
       }
     });
   }
 
   @Override
   public int getItemCount() {
-    return articlesList.size();
+    return articleList.size();
   }
 
   public class SportsViewHolder extends RecyclerView.ViewHolder {
 
-    ImageView articleImage;
-    TextView articleTitle, articleDescription;
+    private ImageView articleImage;
+    private TextView articleTitle, articleDescription;
 
     public SportsViewHolder(View itemView) {
       super(itemView);
@@ -71,13 +72,13 @@ public class SportsAdapter extends RecyclerView.Adapter<SportsAdapter.SportsView
 
     }
 
-    public void onBind(final Articles articles) {
+    public void onBind(Article article) {
       Picasso.with(itemView.getContext())
-          .load(articles.getUrlToImage())
+          .load(article.getUrlToImage())
           .into(articleImage);
 
-      articleTitle.setText(articles.getTitle());
-      articleDescription.setText(articles.getDescription());
+      articleTitle.setText(article.getTitle());
+      articleDescription.setText(article.getDescription());
 
       /**
        * Intent that opens article details page when clicking on the article's itemview
