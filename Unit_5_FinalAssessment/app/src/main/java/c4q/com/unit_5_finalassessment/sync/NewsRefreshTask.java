@@ -82,7 +82,7 @@ public class NewsRefreshTask {
       contentValues.put("urlToImage", article.getUrlToImage());
       contentValues.put("published", article.getPublishedAt());
     }
-    sqlDatabase.getWritableDatabase().insert("sports", null, contentValues);
+    sqlDatabase.getWritableDatabase().replace("sports", null, contentValues);
     Log.d(TAG, "onWrite : Insert Completed");
   }
 
