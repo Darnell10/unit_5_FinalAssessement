@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,7 +102,7 @@ public class SQLDatabase extends SQLiteOpenHelper {
   public List<Article> getArticlesList() {
     List<Article> articleList = new ArrayList<>();
     Cursor cursor = getReadableDatabase().rawQuery(
-        " SELECT * FROM " + TABLE_NAME + ";", null);
+        "SELECT * FROM " + TABLE_NAME, null);
     if (cursor != null) {
       if (cursor.moveToFirst()) {
         do {
@@ -116,6 +117,8 @@ public class SQLDatabase extends SQLiteOpenHelper {
         } while (cursor.moveToNext());
       }
     }
+
+    Log.d("inDB", articleList.get(0).getAuthor()+ "");
     return articleList;
   }
 
