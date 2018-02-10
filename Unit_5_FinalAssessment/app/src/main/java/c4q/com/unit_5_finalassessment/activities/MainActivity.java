@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     RefreshStoriesUtilities.scheduleStoriesRefresh(this);
     SQLDatabase sqlDatabase = SQLDatabase.getInstance(this);
     articlesList.addAll(sqlDatabase.getArticlesList());
+
     sportsAdapter = new SportsAdapter(articlesList);
     articlesRV.setAdapter(sportsAdapter);
     //  getSportsNewsData();
