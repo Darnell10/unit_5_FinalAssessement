@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import c4q.com.unit_5_finalassessment.api.NewsDBService;
 import c4q.com.unit_5_finalassessment.databases.SQLDatabase;
 import c4q.com.unit_5_finalassessment.model.Article;
@@ -82,7 +83,7 @@ public class NewsRefreshTask {
       contentValues.put("published", article.getPublishedAt());
     }
     sqlDatabase.getWritableDatabase().insert("sports", null, contentValues);
-
+    Log.d(TAG, "onWrite : Insert Completed");
   }
 
   public void onServiceCancelled() {
