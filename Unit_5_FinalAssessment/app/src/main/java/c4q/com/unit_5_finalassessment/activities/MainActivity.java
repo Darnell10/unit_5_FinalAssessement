@@ -8,6 +8,7 @@ import android.util.Log;
 
 import android.view.View;
 import c4q.com.unit_5_finalassessment.R;
+import c4q.com.unit_5_finalassessment.databases.SQLDatabase;
 import c4q.com.unit_5_finalassessment.model.Article;
 import c4q.com.unit_5_finalassessment.utils.RefreshStoriesUtilities;
 import java.util.ArrayList;
@@ -25,46 +26,49 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final NewsDBService sportsNewsCallback = NewsDatabaseServiceGenerator
-            .createService();
-    private static final String API_KEY = "aabd804e78a548cfaaa7ef737708b084";
-    private List<Article> articlesList = new ArrayList<>();
+  private static final NewsDBService sportsNewsCallback = NewsDatabaseServiceGenerator
+      .createService();
+  private static final String API_KEY = "aabd804e78a548cfaaa7ef737708b084";
+  private List<Article> articlesList = new ArrayList<>();
 
-    RecyclerView articlesRV;
-    SportsAdapter sportsAdapter;
+  RecyclerView articlesRV;
+  SportsAdapter sportsAdapter;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
 
-        articlesRV = findViewById(R.id.articles_rv);
-        LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext());
-        articlesRV.setLayoutManager(layout);
+    articlesRV = findViewById(R.id.articles_rv);
+    LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext());
+    articlesRV.setLayoutManager(layout);
 
-        RefreshStoriesUtilities.scheduleStoriesRefresh(this);
+    RefreshStoriesUtilities.scheduleStoriesRefresh(this);
+    SQLDatabase sqlDatabase = SQLDatabase.getInstance(this);
+    articlesList.addAll(sqlDatabase.getArticlesList());
+    sportsAdapter = new SportsAdapter(articlesList);
+    articlesRV.setAdapter(sportsAdapter);
+    //  getSportsNewsData();
+  }
 
-      //  getSportsNewsData();
-    }
 
+  public void getSportsNewsData() {
+    Call<NewsDataWrapper> call = sportsNewsCallback
+        .getNewsDiscover(API_KEY);
+    call.enqueue(new Callback<NewsDataWrapper>() {
+      @Override
+      public void onResponse(Call<NewsDataWrapper> call, Response<NewsDataWrapper> response) {
+        List<Article> responseList = response.body().getArticles();
+        articlesList.addAll(responseList);
+        sportsAdapter = new SportsAdapter(articlesList);
+        articlesRV.setAdapter(sportsAdapter);
+        Log.d("News Callback", "onSuccess: " + response.isSuccessful());
+      }
 
-    public void getSportsNewsData() {
-        Call<NewsDataWrapper> call = sportsNewsCallback
-                .getNewsDiscover(API_KEY);
-        call.enqueue(new Callback<NewsDataWrapper>() {
-            @Override
-            public void onResponse(Call<NewsDataWrapper> call, Response<NewsDataWrapper> response) {
-                List<Article> responseList = response.body().getArticles();
-                articlesList.addAll(responseList);
-                sportsAdapter = new SportsAdapter(articlesList);
-                articlesRV.setAdapter(sportsAdapter);
-                Log.d("News Callback", "onSuccess: " + response.isSuccessful());
-            }
-
-            @Override
-            public void onFailure(Call<NewsDataWrapper> call, Throwable t) {
-                Log.d("News Callback", "onFailure: ", t.fillInStackTrace());
-            }
-        });
-    }
+      @Override
+      public void onFailure(Call<NewsDataWrapper> call, Throwable t) {
+        Log.d("News Callback", "onFailure: ", t.fillInStackTrace());
+      }
+    });
+  }
 }
