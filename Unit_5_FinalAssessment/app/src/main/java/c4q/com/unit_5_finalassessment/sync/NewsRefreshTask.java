@@ -1,8 +1,10 @@
 package c4q.com.unit_5_finalassessment.sync;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 
 import c4q.com.unit_5_finalassessment.api.NewsDBService;
 import c4q.com.unit_5_finalassessment.databases.SQL_Database;
@@ -28,12 +30,13 @@ public class NewsRefreshTask {
 
     private static final String ACTION_GOTO_ARTICLE_NOTIFICATION = "goto-article";
     private static final String ACTION_DISMISS_NOTIFICATION = "dismiss-notification";
+    private static SQL_Database sqlDatabase;
 
+    public static String articleString;
 
     public void executeAction(Context context, String string) {
 
     }
-
 
     public void getArticlesData(final Context context) {
         Call<NewsDataWrapper> refreshCall = refreshStoriesCallback
@@ -49,17 +52,31 @@ public class NewsRefreshTask {
 
             @Override
             public void onFailure(Call<NewsDataWrapper> call, Throwable t) {
-                SQL_Database sqlDatabase = SQL_Database.getInstance(context);
-                sqlDatabase.getArticlesList();
+                Log.d("NewsRefreshTask", t.getStackTrace().toString());
             }
         });
-
     }
 
     private void saveData(List<Article> responseList, Context context) {
-        SQL_Database sqlDatabase = SQL_Database.getInstance(context);
+        sqlDatabase = SQL_Database.getInstance(context);
+        ContentValues values = new ContentValues();
+
         for (Article article : responseList) {
-            sqlDatabase.addArticle(article);
+
+            values.put("author", article.getAuthor());
+            values.put("title", article.getTitle());
+            values.put("description", article.getDescription());
+            values.put("url", article.getUrl());
+            values.put("urlToImage", article.getUrlToImage());
+            values.put("publishedAt", article.getPublishedAt());
+
+//            sqlDatabase.addArticle(new Article(
+//                    article.getAuthor(),
+//                    article.getTitle(),
+//                    article.getDescription(),
+//                    article.getUrl(),
+//                    article.getUrlToImage(),
+//                    article.getPublishedAt()));
         }
     }
 

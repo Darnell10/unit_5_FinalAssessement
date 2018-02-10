@@ -12,10 +12,10 @@ import com.squareup.picasso.Picasso;
 import org.w3c.dom.Text;
 
 import c4q.com.unit_5_finalassessment.R;
-import c4q.com.unit_5_finalassessment.model.Articles;
+import c4q.com.unit_5_finalassessment.model.Article;
 
 public class DetailsActivity extends AppCompatActivity {
-    Articles articles;
+    Article articles;
     TextView articleTitle, articleTimestamp, articleSource, articleDescription;
     ImageView articlePic;
 
@@ -39,7 +39,7 @@ public class DetailsActivity extends AppCompatActivity {
     public void gettingArticleData(){
         String data = getIntent().getStringExtra("Articles");
         Gson gson = new Gson();
-        articles = gson.fromJson(data, Articles.class);
+        articles = gson.fromJson(data, Article.class);
     }
 
     public void setViews(){

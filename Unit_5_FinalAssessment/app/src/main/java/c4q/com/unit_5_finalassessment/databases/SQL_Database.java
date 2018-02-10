@@ -17,8 +17,6 @@ import c4q.com.unit_5_finalassessment.model.Article;
 
 public class SQL_Database extends SQLiteOpenHelper {
 
-    //private static SQL_Database sqLiteDatabase;
-
     private static SQL_Database instance;
 
     private static final String DATABASE_NAME = "sport.db";
@@ -26,7 +24,7 @@ public class SQL_Database extends SQLiteOpenHelper {
     private static final int SCHEMA_VERSION = 1;
 
 
-    public static SQL_Database getInstance(Context context) {
+    public synchronized static SQL_Database getInstance(Context context) {
         if (instance == null) {
             instance = new SQL_Database(context.getApplicationContext());
         }
@@ -43,7 +41,7 @@ public class SQL_Database extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + TABLE_NAME
                 + "(_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + " author TEXT, title TEXT, "
-                + "description TEXT, url TEXT,urlToImage TEXT,published TEXT);");
+                + "description TEXT, url TEXT,urlToImage TEXT,publishedAt TEXT);");
 
     }
 
@@ -57,44 +55,31 @@ public class SQL_Database extends SQLiteOpenHelper {
          */
     }
 
-    // This is the original code!!
-//    public void addStory(Article articles) {
-//        Cursor cursor = getReadableDatabase().rawQuery(
-//                " SELECT * FROM " + TABLE_NAME
-//                + "WHERE author " + articles.getAuthor()
-//                + " AND title " + articles.getTitle()
-//                + " AND  description  " + articles.getDescription()
-//                + " AND url " + articles.getUrl()
-//                + " AND  urlToImage " + articles.getUrlToImage()
-//                + " AND published  " + articles.getPublishedAt()
-//                + "';'", null);
-
-
     public void addArticle(Article article) {
-        getWritableDatabase().execSQL(" INSERT INTO " + TABLE_NAME +
-                "(author,title,description,url,urlToImage,published) VALUES("
-                + "'" + article.getAuthor() + "'"
-                + "," + "'" + article.getTitle() + "'"
-                + "," + "'" + article.getDescription() + "'"
-                + "," + "'" + article.getUrl() + "'"
-                + "," + "'" + article.getUrlToImage() + "'"
-                + "," + "'" + article.getPublishedAt()
-                + "';");
-    }
+        Cursor cursor = getReadableDatabase().rawQuery(
+                "SELECT * FROM " + TABLE_NAME
+                        + " WHERE author = '" + article.getAuthor()
+                        + "' AND title = '" + article.getTitle()
+                        + "' AND description = '" + article.getDescription()
+                        + "' AND url = '" + article.getUrl()
+                        + "' AND urlToImage = '" + article.getUrlToImage()
+                        + "' AND publishedAt = '" + article.getPublishedAt() +
+                        "';", null
+        );
 
-    // related to original code do not delete till issue is solved.
-//        if (cursor.getCount()==0){
-//            getWritableDatabase().execSQL( " INSERT INTO " + TABLE_NAME
-//                    +"(author,title,description,url ,urlToImage ,published) VALUES (‘" +
-//                    articles.getAuthor()+"‘,’" +
-//                    articles.getTitle()+"‘,’" +
-//                    articles.getDescription()+"‘,’" +
-//                    articles.getUrl()+"‘,’" +
-//                    articles.getUrlToImage()+"‘,’" +
-//                    articles.getPublishedAt()+"‘);’");
-//        }
-//        cursor.close();
-//    }
+        if (cursor.getCount() == 0) {
+            getWritableDatabase().execSQL(" INSERT INTO " + TABLE_NAME +
+                    "(author,title,description,url,urlToImage,publishedAt) VALUES("
+                    + "'" + article.getAuthor() + "'"
+                    + "," + "'" + article.getTitle() + "'"
+                    + "," + "'" + article.getDescription() + "'"
+                    + "," + "'" + article.getUrl() + "'"
+                    + "," + "'" + article.getUrlToImage() + "'"
+                    + "," + "'" + article.getPublishedAt()
+                    + "';");
+        }
+        cursor.close();
+    }
 
     public List<Article> getArticlesList() {
         List<Article> articleList = new ArrayList<>();
@@ -109,13 +94,11 @@ public class SQL_Database extends SQLiteOpenHelper {
                             cursor.getString(cursor.getColumnIndex("description")),
                             cursor.getString(cursor.getColumnIndex("url")),
                             cursor.getString(cursor.getColumnIndex("urlToImage")),
-                            cursor.getString(cursor.getColumnIndex("published")));
+                            cursor.getString(cursor.getColumnIndex("publishedAt")));
                     articleList.add(article);
                 } while (cursor.moveToNext());
             }
         }
         return articleList;
     }
-
-
 }

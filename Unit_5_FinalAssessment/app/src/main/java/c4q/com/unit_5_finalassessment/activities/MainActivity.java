@@ -15,6 +15,8 @@ import c4q.com.unit_5_finalassessment.model.Article;
 import c4q.com.unit_5_finalassessment.model.NewsDataWrapper;
 import c4q.com.unit_5_finalassessment.service.NewsDatabaseServiceGenerator;
 import c4q.com.unit_5_finalassessment.adapter.SportsAdapter;
+import c4q.com.unit_5_finalassessment.sync.NewsRefreshTask;
+import c4q.com.unit_5_finalassessment.utils.RefreshStoriesUtilities;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,7 +40,11 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext());
         articlesRV.setLayoutManager(layout);
 
-        getSportsNewsData();
+        if (RefreshStoriesUtilities.isNetworkAvailable(getApplicationContext())) {
+            getSportsNewsData();
+        } else {
+            getSportsNewsDataFromDatabase();
+        }
     }
 
 
@@ -52,13 +58,22 @@ public class MainActivity extends AppCompatActivity {
                 articleList.addAll(responseList);
                 sportsAdapter = new SportsAdapter(articleList);
                 articlesRV.setAdapter(sportsAdapter);
-                Log.d("News Callback", "onSuccess: " + response.isSuccessful());
+
+                for (Article a : responseList) {
+                    Log.d("onSuccess", a.getTitle() + " " + a.getAuthor());
+                }
             }
 
             @Override
             public void onFailure(Call<NewsDataWrapper> call, Throwable t) {
-                Log.d("News Callback", "onFailure: ", t.fillInStackTrace());
+                Log.d("onFailure", t.getMessage());
             }
         });
     }
+
+    public void getSportsNewsDataFromDatabase() {
+        NewsRefreshTask newsRefreshTask = new NewsRefreshTask();
+        newsRefreshTask.getArticlesData(getApplicationContext());
+    }
 }
+
