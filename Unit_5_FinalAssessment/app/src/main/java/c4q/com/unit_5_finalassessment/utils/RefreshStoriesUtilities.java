@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 public class RefreshStoriesUtilities {
 
-  private static final int REFRESH_INTERVAL_MINUTES = 15;
+  private static final int REFRESH_INTERVAL_MINUTES = 2;
   private static final int REFRESH_INTERVAL_SECONDS = (int) (TimeUnit.MINUTES
       .toSeconds(REFRESH_INTERVAL_MINUTES));
   private static final int SYNC_FLEXTIME_SECONDS = REFRESH_INTERVAL_SECONDS;
@@ -48,10 +48,9 @@ public class RefreshStoriesUtilities {
         .setTrigger(Trigger.executionWindow(REFRESH_INTERVAL_SECONDS,
             REFRESH_INTERVAL_SECONDS + SYNC_FLEXTIME_SECONDS))
         .setReplaceCurrent(true)
-        .setRetryStrategy(RetryStrategy.DEFAULT_EXPONENTIAL)
         .build();
 
-    dispatcher.mustSchedule(refreshStoriesJob);
+    dispatcher.schedule(refreshStoriesJob);
     isInitialized = true;
   }
 

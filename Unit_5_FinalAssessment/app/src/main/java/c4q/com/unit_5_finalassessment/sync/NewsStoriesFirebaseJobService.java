@@ -16,7 +16,7 @@ public class NewsStoriesFirebaseJobService extends JobService {
 
   @Override
   public boolean onStartJob(JobParameters job) {
-    Log.d(TAG, "start: on start called");
+    Log.d(TAG, "start: on startJob called");
     jobParams = job;
     newsRefreshTask = new NewsRefreshTask();
     newsRefreshTask.getArticlesData(this);
@@ -25,13 +25,15 @@ public class NewsStoriesFirebaseJobService extends JobService {
 
   @Override
   public boolean onStopJob(JobParameters job) {
+    Log.d(TAG,"stop: service cancel called");
     if (newsRefreshTask != null) {
-      // newsRefreshTask.onserviceCancelled();
+      newsRefreshTask.onServiceCancelled();
     }
     return true;
   }
 
   public void jobCompleted() {
+    Log.d(TAG,"job completed");
     this.jobFinished(jobParams, false);
   }
 }
