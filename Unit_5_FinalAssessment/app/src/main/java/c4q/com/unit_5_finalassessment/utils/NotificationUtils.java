@@ -12,7 +12,7 @@ import android.support.v4.app.NotificationCompat.Action;
 import android.support.v4.app.NotificationCompat.BigTextStyle;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v4.content.ContextCompat;
-import c4q.com.unit_5_finalassessment.MainActivity;
+import c4q.com.unit_5_finalassessment.activities.MainActivity;
 import c4q.com.unit_5_finalassessment.R;
 import c4q.com.unit_5_finalassessment.model.Article;
 import c4q.com.unit_5_finalassessment.sync.NewsRefreshIntentService;

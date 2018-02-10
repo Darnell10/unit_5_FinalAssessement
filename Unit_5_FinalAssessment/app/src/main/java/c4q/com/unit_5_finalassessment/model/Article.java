@@ -14,15 +14,6 @@ public class Article {
                  String published) {
   }
 
-
-  public void setUrl(String url) {
-    this.url = url;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
   public String getAuthor() {
     return author;
   }

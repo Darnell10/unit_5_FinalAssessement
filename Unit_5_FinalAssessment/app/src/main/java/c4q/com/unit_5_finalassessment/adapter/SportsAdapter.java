@@ -1,5 +1,6 @@
 package c4q.com.unit_5_finalassessment.adapter;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import c4q.com.unit_5_finalassessment.activities.DetailsActivity;
 import c4q.com.unit_5_finalassessment.model.Article;
 import c4q.com.unit_5_finalassessment.utils.NotificationUtils;
+
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -35,7 +39,6 @@ public class SportsAdapter extends RecyclerView.Adapter<SportsAdapter.SportsView
     return new SportsViewHolder(v);
   }
 
-  //Wrap call in an ascync task
   @Override
   public void onBindViewHolder(final SportsViewHolder holder, final int position) {
     Article article = articleList.get(position);
@@ -76,6 +79,23 @@ public class SportsAdapter extends RecyclerView.Adapter<SportsAdapter.SportsView
 
       articleTitle.setText(article.getTitle());
       articleDescription.setText(article.getDescription());
+
+      /**
+       * Intent that opens article details page when clicking on the article's itemview
+       * Using Gson to pass data instead of bundle...
+       */
+
+//      itemView.setOnClickListener(new OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//          Intent intent = new Intent(itemView.getContext(), DetailsActivity.class);
+//          Gson gson = new Gson();
+//          String articlesToString = gson.toJson(articles);
+//          intent.putExtra("Articles", articlesToString);
+//          itemView.getContext().startActivity(intent);
+//
+//        }
+//      });
 
     }
   }

@@ -1,4 +1,4 @@
-package c4q.com.unit_5_finalassessment;
+package c4q.com.unit_5_finalassessment.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,8 +9,8 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import c4q.com.unit_5_finalassessment.R;
 import c4q.com.unit_5_finalassessment.api.NewsDBService;
-import c4q.com.unit_5_finalassessment.databases.SQL_Database;
 import c4q.com.unit_5_finalassessment.model.Article;
 import c4q.com.unit_5_finalassessment.model.NewsDataWrapper;
 import c4q.com.unit_5_finalassessment.service.NewsDatabaseServiceGenerator;
@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<NewsDataWrapper> call, Throwable t) {
-
                 Log.d("News Callback", "onFailure: ", t.fillInStackTrace());
             }
         });
