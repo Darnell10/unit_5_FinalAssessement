@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="c4q.com.unit_5_finalassessment">
+  package="c4q.com.unit_5_finalassessment">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -19,14 +19,15 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name=".sync.NewsStoriesFirebaseJobService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
-            </intent-filter>
-        </service>
-        <service android:name=".sync.NewsRefreshIntentService" />
+    <service
+      android:exported="false"
+      android:name=".sync.NewsStoriesFirebaseJobService">
+      <intent-filter>
+        <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+      </intent-filter>
+    </service>
+
+    <service android:name=".sync.NewsRefreshIntentService"/>
 
         <activity android:name=".activities.DetailsActivity"></activity>
     </application>

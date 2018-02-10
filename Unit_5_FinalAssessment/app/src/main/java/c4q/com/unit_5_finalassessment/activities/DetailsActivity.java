@@ -6,16 +6,16 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import c4q.com.unit_5_finalassessment.model.Article;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
 import c4q.com.unit_5_finalassessment.R;
-import c4q.com.unit_5_finalassessment.model.Articles;
 
 public class DetailsActivity extends AppCompatActivity {
-    Articles articles;
+    Article articles;
     TextView articleTitle, articleTimestamp, articleSource, articleDescription;
     ImageView articlePic;
 
@@ -39,7 +39,7 @@ public class DetailsActivity extends AppCompatActivity {
     public void gettingArticleData(){
         String data = getIntent().getStringExtra("Articles");
         Gson gson = new Gson();
-        articles = gson.fromJson(data, Articles.class);
+        articles = gson.fromJson(data, Article.class);
     }
 
     public void setViews(){
