@@ -7,13 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompat.Action;
 import android.support.v4.app.NotificationCompat.BigTextStyle;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v4.content.ContextCompat;
-import c4q.com.unit_5_finalassessment.MainActivity;
+import c4q.com.unit_5_finalassessment.activities.MainActivity;
 import c4q.com.unit_5_finalassessment.R;
 import c4q.com.unit_5_finalassessment.model.Articles;
 import c4q.com.unit_5_finalassessment.sync.NewsRefreshIntentService;
@@ -21,7 +20,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import retrofit2.http.Url;
 
 /**
  * Created by c4q on 2/5/18.

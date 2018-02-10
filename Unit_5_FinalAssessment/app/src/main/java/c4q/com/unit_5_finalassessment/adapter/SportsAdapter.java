@@ -1,6 +1,6 @@
 package c4q.com.unit_5_finalassessment.adapter;
 
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import c4q.com.unit_5_finalassessment.activities.DetailsActivity;
 import c4q.com.unit_5_finalassessment.utils.NotificationUtils;
+
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -36,7 +39,6 @@ public class SportsAdapter extends RecyclerView.Adapter<SportsAdapter.SportsView
     return new SportsViewHolder(v);
   }
 
-  //Wrap call in an ascync task
   @Override
   public void onBindViewHolder(final SportsViewHolder holder, final int position) {
     Articles articles = articlesList.get(position);
@@ -45,7 +47,6 @@ public class SportsAdapter extends RecyclerView.Adapter<SportsAdapter.SportsView
       @Override
       public void onClick(View v) {
         articlesList.get(position).getUrl();
-        //AsyncTask asyncTask = new AsyncTask();
         NotificationUtils.breakingNews(holder.itemView.getContext(), articlesList.get(position));
       }
     });
@@ -70,13 +71,30 @@ public class SportsAdapter extends RecyclerView.Adapter<SportsAdapter.SportsView
 
     }
 
-    public void onBind(Articles articles) {
+    public void onBind(final Articles articles) {
       Picasso.with(itemView.getContext())
           .load(articles.getUrlToImage())
           .into(articleImage);
 
       articleTitle.setText(articles.getTitle());
       articleDescription.setText(articles.getDescription());
+
+      /**
+       * Intent that opens article details page when clicking on the article's itemview
+       * Using Gson to pass data instead of bundle...
+       */
+
+//      itemView.setOnClickListener(new OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//          Intent intent = new Intent(itemView.getContext(), DetailsActivity.class);
+//          Gson gson = new Gson();
+//          String articlesToString = gson.toJson(articles);
+//          intent.putExtra("Articles", articlesToString);
+//          itemView.getContext().startActivity(intent);
+//
+//        }
+//      });
 
     }
   }
