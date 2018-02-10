@@ -45,14 +45,6 @@ public class SportsAdapter extends RecyclerView.Adapter<SportsAdapter.SportsView
   public void onBindViewHolder(final SportsViewHolder holder, final int position) {
     Article article = articleList.get(position);
     holder.onBind(article);
-    holder.itemView.setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        articleList.get(position).getUrl();
-        //AsyncTask asyncTask = new AsyncTask();
-        NotificationUtils.breakingNews(holder.itemView.getContext(), articleList.get(position));
-      }
-    });
   }
 
   @Override

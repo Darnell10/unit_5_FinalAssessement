@@ -49,6 +49,9 @@ public class NewsRefreshTask {
         List<Article> responseList = response.body().getArticles();
         addMovieUsingContentValues(context, responseList);
         ((NewsStoriesFirebaseJobService) context).jobCompleted();
+        //AsyncTask asyncTask = new AsyncTask();
+        NotificationUtils.breakingNews(context, responseList.get(0));
+
       }
 
       @Override
