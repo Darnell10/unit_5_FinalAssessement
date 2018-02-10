@@ -1,13 +1,14 @@
 package c4q.com.unit_5_finalassessment.sync;
 
+import static java.nio.channels.AsynchronousServerSocketChannel.open;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
-
 import c4q.com.unit_5_finalassessment.api.NewsDBService;
-import c4q.com.unit_5_finalassessment.databases.SQL_Database;
+import c4q.com.unit_5_finalassessment.databases.SQLDatabase;
 import c4q.com.unit_5_finalassessment.model.Article;
 import c4q.com.unit_5_finalassessment.model.NewsDataWrapper;
 import c4q.com.unit_5_finalassessment.service.NewsDatabaseServiceGenerator;
@@ -24,70 +25,68 @@ import retrofit2.Response;
  */
 
 public class NewsRefreshTask {
-    private static final String API_KEY = "aabd804e78a548cfaaa7ef737708b084";
-    private static final NewsDBService refreshStoriesCallback = NewsDatabaseServiceGenerator
-            .createService();
 
-    private static final String ACTION_GOTO_ARTICLE_NOTIFICATION = "goto-article";
-    private static final String ACTION_DISMISS_NOTIFICATION = "dismiss-notification";
-    private static SQL_Database sqlDatabase;
+  private static final String API_KEY = "aabd804e78a548cfaaa7ef737708b084";
+  private static final NewsDBService refreshStoriesCallback = NewsDatabaseServiceGenerator
+      .createService();
 
-    public static String articleString;
+  private static final String ACTION_GOTO_ARTICLE_NOTIFICATION = "goto-article";
+  private static final String ACTION_DISMISS_NOTIFICATION = "dismiss-notification";
+  private static final String TAG = NewsRefreshTask.class.getSimpleName();
+  private Call<NewsDataWrapper> newsCall;
 
-    public void executeAction(Context context, String string) {
+  public void executeAction(Context context, String string) {
 
+  }
+
+
+  public void getArticlesData(final Context context) {
+    Call<NewsDataWrapper> refreshCall = refreshStoriesCallback
+        .getNewsDiscover(API_KEY);
+    refreshCall.enqueue(new Callback<NewsDataWrapper>() {
+      @Override
+      public void onResponse(Call<NewsDataWrapper> call, Response<NewsDataWrapper> response) {
+        List<Article> responseList = response.body().getArticles();
+        addMovieUsingContentValues(context, responseList);
+        ((NewsStoriesFirebaseJobService) context).jobCompleted();
+      }
+
+      @Override
+      public void onFailure(Call<NewsDataWrapper> call, Throwable t) {
+
+      }
+    });
+
+  }
+
+
+  public static void executeNotification(Context context, String action, String url) {
+    if (ACTION_GOTO_ARTICLE_NOTIFICATION.equals(action)) {
+      if (url != null || url.equals("")) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        context.startActivity(intent);
+      }
+    } else if (ACTION_DISMISS_NOTIFICATION.equals(action)) {
+      NotificationUtils.clearAllNotifications(context);
     }
+  }
 
-    public void getArticlesData(final Context context) {
-        Call<NewsDataWrapper> refreshCall = refreshStoriesCallback
-                .getNewsDiscover(API_KEY);
-        refreshCall.cancel();
-        refreshCall.enqueue(new Callback<NewsDataWrapper>() {
-            @Override
-            public void onResponse(Call<NewsDataWrapper> call, Response<NewsDataWrapper> response) {
-                List<Article> responseList = response.body().getArticles();
-                saveData(responseList, context);
-                ((NewsStoriesFirebaseJobService) context).jobCompleted();
-            }
-
-            @Override
-            public void onFailure(Call<NewsDataWrapper> call, Throwable t) {
-                Log.d("NewsRefreshTask", t.getStackTrace().toString());
-            }
-        });
+  public void addMovieUsingContentValues(Context context, List<Article> articles) {
+    SQLDatabase sqlDatabase = SQLDatabase.getInstance(context);
+    ContentValues contentValues = new ContentValues();
+    for (Article article : articles) {
+      contentValues.put("author", article.getAuthor());
+      contentValues.put("title", article.getTitle());
+      contentValues.put("description", article.getAuthor());
+      contentValues.put("url", article.getUrl());
+      contentValues.put("urlToImage", article.getUrlToImage());
+      contentValues.put("published", article.getPublishedAt());
     }
+    sqlDatabase.getWritableDatabase().replace("sports", null, contentValues);
+    Log.d(TAG, "onWrite : Insert Completed");
+  }
 
-    private void saveData(List<Article> responseList, Context context) {
-        sqlDatabase = SQL_Database.getInstance(context);
-        ContentValues values = new ContentValues();
-
-        for (Article article : responseList) {
-
-            values.put("author", article.getAuthor());
-            values.put("title", article.getTitle());
-            values.put("description", article.getDescription());
-            values.put("url", article.getUrl());
-            values.put("urlToImage", article.getUrlToImage());
-            values.put("publishedAt", article.getPublishedAt());
-
-//            sqlDatabase.addArticle(new Article(
-//                    article.getAuthor(),
-//                    article.getTitle(),
-//                    article.getDescription(),
-//                    article.getUrl(),
-//                    article.getUrlToImage(),
-//                    article.getPublishedAt()));
-        }
-    }
-
-    public static void executeNotification(Context context, String action, String url) {
-        if (ACTION_GOTO_ARTICLE_NOTIFICATION.equals(action)) {
-            if (url != null || url.equals("")) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                context.startActivity(intent);
-            }
-        } else if (ACTION_DISMISS_NOTIFICATION.equals(action)) {
-            NotificationUtils.clearAllNotifications(context);
-        }
-    }
+  public void onServiceCancelled() {
+    newsCall.cancel();
+  }
 }

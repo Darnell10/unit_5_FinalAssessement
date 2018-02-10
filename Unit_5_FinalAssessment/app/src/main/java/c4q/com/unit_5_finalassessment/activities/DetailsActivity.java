@@ -6,13 +6,13 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import c4q.com.unit_5_finalassessment.model.Article;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
 import c4q.com.unit_5_finalassessment.R;
-import c4q.com.unit_5_finalassessment.model.Article;
 
 public class DetailsActivity extends AppCompatActivity {
     Article articles;
